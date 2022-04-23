@@ -19,7 +19,7 @@ const PressSheet: NextPage<PressSheetProps> = ({ ps }) => {
         templateRows="repeat(3,1fr)"
       >
         {ps.pages.map((page, idx) => {
-          if (idx % 2 != 0 && ps.Back == false) {
+          if (idx % 2 !== 0 && ps.Back === false) {
             return <PressSheetItem key={idx} page={page} disabled />;
           } else {
             return <PressSheetItem key={idx} page={page} />;

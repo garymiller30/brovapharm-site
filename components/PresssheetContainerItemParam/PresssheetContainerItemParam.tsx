@@ -61,7 +61,7 @@ const PresssheetContainerItemParam: NextPage<
         <p>Тираж:</p>
         <NumberInput
           w="100px"
-          min={0}
+          min={1}
           value={count}
           onChange={onChangeCountHandle}
         >
