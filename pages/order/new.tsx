@@ -8,6 +8,7 @@ import { useState } from "react";
 import PS from "../../models/ps";
 import psCheck from "../../lib/psCheck";
 import { useToast } from "@chakra-ui/react";
+import Order from "../../models/order";
 
 const toastOptions: UseToastOptions = {
   status: "error",
@@ -25,6 +26,10 @@ const NewOrder: NextPage = () => {
     toast({ ...toastOptions, description });
   };
 
+  const showSuccessToast = (description: string) => {
+    toast({ ...toastOptions, description, status: "success" });
+  };
+
   function onAddHandle() {
     setPsArr([...psArr, new PS(psArr.length + 1)]);
   }
@@ -37,6 +42,19 @@ const NewOrder: NextPage = () => {
           return p;
         })
     );
+  }
+
+  async function createOrder() {
+    try {
+      const order: Order = new Order(orderNum, psArr);
+      await fetch("/api/order/add", {
+        method: "POST",
+        body: JSON.stringify(order),
+      });
+      showSuccessToast("Замовлення створено!");
+    } catch (error: unknown) {
+      showErrToast((error as Error).message);
+    }
   }
 
   const onCreateHandle = () => {
@@ -54,6 +72,7 @@ const NewOrder: NextPage = () => {
     }
 
     //TODO:create order
+    createOrder();
   };
 
   return (
