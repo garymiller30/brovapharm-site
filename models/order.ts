@@ -5,6 +5,7 @@ import PS from "./ps";
 export default class Order {
     id?: ObjectId;
     Number: number;
+    CreateDate: Date = new Date();
     Status: ORDER_STATUS = ORDER_STATUS.NEW;
     sheets: PS[];
 

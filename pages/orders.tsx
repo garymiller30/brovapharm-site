@@ -1,20 +1,25 @@
-import { FindCursor, WithId } from "mongodb";
+import { Container, HStack, VStack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { GetServerSideProps } from "next";
+import { createContext, useEffect, useState } from "react";
+import OrderList from "../components/OrderList/OrderList";
+import {
+  OrderContext,
+  OrderContextData,
+  OrderContextDataDefaultValue,
+  OrderContextProvider,
+  OrdersProps,
+} from "../context/orderContext";
 import connectToDatabase from "../lib/connectToDatabase";
 import Order from "../models/order";
 
-interface OrdersProps {
-  orders: Order[];
-}
-
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
+  const [ordersArr, setOrdersArr] = useState<Order[]>(orders);
+
   return (
-    <div>
-      {orders.map((o) => (
-        <div>{o.Number} </div>
-      ))}
-    </div>
+    <Container maxW={600}>
+      <OrderList orders={orders} />
+    </Container>
   );
 };
 
@@ -25,6 +30,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const orders = await collection.find().toArray();
 
   return {
-    props: { orders: orders.map((o) => ({ ...o, _id: o._id.toString() })) }, // will be passed to the page component as props
+    props: {
+      orders: orders.map((o) =>
+        JSON.parse(JSON.stringify({ ...o, id: o._id }))
+      ),
+    }, // will be passed to the page component as props
   };
 };
