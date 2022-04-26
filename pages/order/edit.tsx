@@ -1,18 +1,14 @@
+import { Text } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import { OrderContext, useOrderContext } from "../../context/orderContext";
-import Order from "../../models/order";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 
 const Edit: NextPage = () => {
-  const [order, setOrder] = useState<Order | null>(null);
-  const router = useRouter();
-  const ctx = useOrderContext();
-  useEffect(() => {
-    const { id } = router.query;
+  const [editOrder] = useRecoilState(editOrderState);
 
-    console.log(ctx);
-  }, []);
+  if (!editOrder) return <Text>Нічого редагувати</Text>;
+
+  console.log(editOrder);
 
   return <>Edit</>;
 };

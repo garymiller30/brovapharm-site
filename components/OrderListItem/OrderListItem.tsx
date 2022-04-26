@@ -13,16 +13,22 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 import Order from "../../models/order";
 import { ORDER_STATUS } from "../../var/orderStatusEnum";
 
 interface OrderListItemProps {
   order: Order;
-  onEdit: (order: Order) => void;
 }
 
-const OrderListItem: NextPage<OrderListItemProps> = ({ order, onEdit }) => {
+const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
+  const [, setEditOrder] = useRecoilState(editOrderState);
   const date = new Date(order.CreateDate);
+
+  function onEditOrderHandle() {
+    setEditOrder(order);
+  }
 
   let StatusIcon;
   switch (order.Status) {
@@ -57,12 +63,15 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order, onEdit }) => {
           <NextLink
             href={{
               pathname: "/order/edit",
-              query: { id: order.id?.toString() },
             }}
           >
             <Link>
               <Tooltip label="редагувати заявку">
-                <IconButton aria-label={"edit"} icon={<EditIcon />} />
+                <IconButton
+                  aria-label={"edit"}
+                  icon={<EditIcon />}
+                  onClick={onEditOrderHandle}
+                />
               </Tooltip>
             </Link>
           </NextLink>
