@@ -26,7 +26,7 @@ interface PresssheetContainerItemParamProps {
 const PresssheetContainerItemParam: NextPage<
   PresssheetContainerItemParamProps
 > = ({ ps, onChange }) => {
-  const [back, setBack] = useState<string>("true");
+  const [back, setBack] = useState<string>(ps.Back.toString());
   const [count, setCount] = useState<number>(ps.Count);
 
   const onChangeHandle = (val: string) => {

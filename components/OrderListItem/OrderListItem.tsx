@@ -15,6 +15,7 @@ import { NextPage } from "next";
 import NextLink from "next/link";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
+
 import Order from "../../models/order";
 import { ORDER_STATUS } from "../../var/orderStatusEnum";
 
@@ -27,7 +28,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
   const date = new Date(order.CreateDate);
 
   function onEditOrderHandle() {
-    setEditOrder(order);
+    setEditOrder({ order: order, isNew: false });
   }
 
   let StatusIcon;

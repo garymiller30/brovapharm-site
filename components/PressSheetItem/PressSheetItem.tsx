@@ -22,6 +22,7 @@ const PressSheetItem: NextPage<PressSheetItemProps> = ({ disabled, page }) => {
   const [val, setVal] = useState<number | undefined>(page.Number);
   const onChangeHandle = (v: string) => {
     const num = v ? Number(v) : undefined;
+
     page.Number = num;
     setVal(num);
   };

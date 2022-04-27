@@ -1,8 +1,12 @@
 import { atom } from "recoil";
 import Order from "../models/order";
 
+interface editOrderStateProps {
+    order: Order,
+    isNew: boolean
+}
 
-export const editOrderState = atom<Order | null>({
+export const editOrderState = atom<editOrderStateProps>({
     key: "editOrderState",
-    default: null
+    default: { order: new Order(), isNew: true }
 })

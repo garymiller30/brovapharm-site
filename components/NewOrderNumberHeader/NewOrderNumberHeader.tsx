@@ -4,6 +4,8 @@ import { Flex, Spacer } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 
 interface NewOrderNumberHeaderProps {
   number: number;
@@ -16,6 +18,7 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
   onChange,
   onCreate,
 }) => {
+  const [editOrder] = useRecoilState(editOrderState);
   const onChangeHandle = (event: any) => {
     onChange(Number(event.target.value));
   };
@@ -47,7 +50,7 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
       </HStack>
       <Spacer />
       <Button bg="#e9a31e" color="#044786" onClick={onCreateHandle}>
-        Створити
+        {editOrder.isNew ? "Створити" : "Зберегти"}
       </Button>
     </Flex>
   );

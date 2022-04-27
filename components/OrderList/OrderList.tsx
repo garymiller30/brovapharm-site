@@ -10,7 +10,7 @@ interface OrderListProps {
 
 const OrderList: NextPage<OrderListProps> = ({ orders }) => {
   return (
-    <VStack gap={4}>
+    <VStack>
       {orders.map((o) => (
         <OrderListItem key={o.id?.toString()} order={o} />
       ))}
