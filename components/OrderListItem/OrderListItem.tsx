@@ -33,6 +33,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
 
   function onEditOrderHandle() {
     setEditOrder({ order: order, isNew: false, isReadOnly: false });
+    router.push("/order/edit");
   }
 
   let StatusIcon;
@@ -80,21 +81,13 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
 
         <Spacer />
         <Box>
-          <NextLink
-            href={{
-              pathname: "/order/edit",
-            }}
-          >
-            <Link>
-              <Tooltip label="редагувати заявку">
-                <IconButton
-                  aria-label={"edit"}
-                  icon={<EditIcon />}
-                  onClick={onEditOrderHandle}
-                />
-              </Tooltip>
-            </Link>
-          </NextLink>
+          <Tooltip label="редагувати заявку">
+            <IconButton
+              aria-label={"edit"}
+              icon={<EditIcon />}
+              onClick={onEditOrderHandle}
+            />
+          </Tooltip>
         </Box>
       </Flex>
       {/* </LinkOverlay> */}
