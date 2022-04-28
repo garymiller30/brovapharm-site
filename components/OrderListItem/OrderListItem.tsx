@@ -32,7 +32,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
   const date = new Date(order.CreateDate);
 
   function onEditOrderHandle() {
-    setEditOrder({ order: order, isNew: false });
+    setEditOrder({ order: order, isNew: false, isReadOnly: false });
   }
 
   let StatusIcon;

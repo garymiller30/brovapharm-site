@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [, setEditOrder] = useRecoilState(editOrderState);
 
   function onCreateOrderHandle() {
-    setEditOrder({ order: new Order(), isNew: true });
+    setEditOrder({ order: new Order(), isNew: true, isReadOnly: false });
   }
 
   return (
