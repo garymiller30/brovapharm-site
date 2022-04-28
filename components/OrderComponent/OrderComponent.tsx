@@ -2,6 +2,7 @@ import {
   Container,
   Grid,
   GridItem,
+  Text,
   useToast,
   UseToastOptions,
 } from "@chakra-ui/react";
@@ -31,7 +32,6 @@ const OrderComponent: NextPage = () => {
 
   useEffect(() => {
     if (editOrder) {
-      console.log("OrderComponent", editOrder);
       setPsArr(
         editOrder.order.sheets.map((s) => {
           const ns = new PS(s.Number);
@@ -124,6 +124,9 @@ const OrderComponent: NextPage = () => {
       });
     }
   }
+
+  if (!editOrder) return <Text>Нема що правити</Text>;
+
   return (
     <Container minW={600} maxW={600} h="100vh">
       <Grid templateRows="50px 60px 1fr" h="100%">
@@ -134,7 +137,12 @@ const OrderComponent: NextPage = () => {
             onCreate={onCreateHandle}
           />
         </GridItem>
-        <GridItem p="0 8px" bg="#109dec" borderBottomRadius={5}>
+        <GridItem
+          p="0 8px"
+          bg="#109dec"
+          borderBottomRadius={5}
+          hidden={editOrder.isReadOnly}
+        >
           <NewOrderMenu onAdd={onAddHandle} />
         </GridItem>
         <GridItem p="0 8px" m="8px 0 0 0">

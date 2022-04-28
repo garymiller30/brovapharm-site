@@ -1,4 +1,11 @@
-import { Container, HStack, VStack } from "@chakra-ui/react";
+import {
+  Center,
+  Container,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import OrderList from "../components/OrderList/OrderList";
@@ -13,7 +20,13 @@ interface OrdersProps {
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
   return (
     <Container maxW={600}>
+      {/* <VStack gap={3}> */}
+      <Center m="0 0 20px 0">
+        <Text fontSize="4xl">заявки</Text>
+      </Center>
+
       <OrderList orders={orders} />
+      {/* </VStack> */}
     </Container>
   );
 };

@@ -7,9 +7,12 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Text,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 import PS from "../../models/ps";
 import PsItem from "../../models/psItem";
 
@@ -20,6 +23,7 @@ interface PressSheetItemProps {
 
 const PressSheetItem: NextPage<PressSheetItemProps> = ({ disabled, page }) => {
   const [val, setVal] = useState<number | undefined>(page.Number);
+  const [editOrder] = useRecoilState(editOrderState);
   const onChangeHandle = (v: string) => {
     const num = v ? Number(v) : undefined;
 
@@ -30,7 +34,9 @@ const PressSheetItem: NextPage<PressSheetItemProps> = ({ disabled, page }) => {
   return (
     <GridItem w="100%" h="100%" border="1px solid gray" bg={"#82ccfc"}>
       <Center w="100%" h="100%">
-        {
+        {editOrder.isReadOnly ? (
+          <Text fontSize="20px">{val}</Text>
+        ) : (
           <NumberInput
             w="70%"
             min={1}
@@ -44,7 +50,7 @@ const PressSheetItem: NextPage<PressSheetItemProps> = ({ disabled, page }) => {
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
-        }
+        )}
       </Center>
     </GridItem>
   );

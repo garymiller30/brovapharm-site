@@ -15,6 +15,8 @@ import {
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 
 import PS from "../../models/ps";
 
@@ -28,6 +30,7 @@ const PresssheetContainerItemParam: NextPage<
 > = ({ ps, onChange }) => {
   const [back, setBack] = useState<string>(ps.Back.toString());
   const [count, setCount] = useState<number>(ps.Count);
+  const [editOrder] = useRecoilState(editOrderState);
 
   const onChangeHandle = (val: string) => {
     ps.Back = val === "true" ? true : false;
@@ -49,10 +52,15 @@ const PresssheetContainerItemParam: NextPage<
 
       <HStack gap={4} marginBottom={2}>
         <p>Зворот: </p>
+
         <RadioGroup onChange={onChangeHandle} value={back}>
           <HStack>
-            <Radio value={"true"}>чужий</Radio>
-            <Radio value={"false"}>свій</Radio>
+            <Radio value={"true"} isDisabled={editOrder.isReadOnly}>
+              чужий
+            </Radio>
+            <Radio value={"false"} isDisabled={editOrder.isReadOnly}>
+              свій
+            </Radio>
           </HStack>
         </RadioGroup>
       </HStack>
@@ -64,6 +72,7 @@ const PresssheetContainerItemParam: NextPage<
           min={1}
           value={count}
           onChange={onChangeCountHandle}
+          isDisabled={editOrder.isReadOnly}
         >
           <NumberInputField id="amount" fontWeight="bold" fontSize="lg" />
           <NumberInputStepper>

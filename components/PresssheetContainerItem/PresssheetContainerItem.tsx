@@ -2,6 +2,8 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Flex, Grid, IconButton } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { editOrderState } from "../../atoms/editOrderState";
 import PS from "../../models/ps";
 import PressSheet from "../PressSheet/PressSheet";
 import PresssheetContainerItemParam from "../PresssheetContainerItemParam/PresssheetContainerItemParam";
@@ -16,7 +18,7 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
   onDelete,
 }) => {
   const [back, setBack] = useState<boolean>(ps.Back);
-
+  const [editOrder] = useRecoilState(editOrderState);
   const onChangeHandle = () => {
     setBack(ps.Back);
   };
@@ -41,6 +43,7 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
         right={2}
         top={2}
         onClick={() => onDelete(ps)}
+        hidden={editOrder.isReadOnly}
       />
     </Flex>
   );

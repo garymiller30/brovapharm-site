@@ -3,7 +3,8 @@ import Order from "../models/order";
 
 interface editOrderStateProps {
     order: Order,
-    isNew: boolean
+    isNew: boolean,
+    isReadOnly?: boolean
 }
 
 export const editOrderState = atom<editOrderStateProps>({

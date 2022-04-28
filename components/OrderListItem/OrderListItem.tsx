@@ -6,6 +6,8 @@ import {
   HStack,
   IconButton,
   Link,
+  LinkBox,
+  LinkOverlay,
   Spacer,
   Text,
   Tooltip,
@@ -13,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
 
@@ -25,6 +28,7 @@ interface OrderListItemProps {
 
 const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
   const [, setEditOrder] = useRecoilState(editOrderState);
+  const router = useRouter();
   const date = new Date(order.CreateDate);
 
   function onEditOrderHandle() {
@@ -44,8 +48,22 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
       break;
   }
 
+  function onViewClickHandle() {
+    setEditOrder({ order: order, isNew: false, isReadOnly: true });
+    router.push("/order/view");
+  }
+
   return (
-    <Box w="100%" bg="#82ccfc" borderWidth="1px" borderRadius="lg" p={2}>
+    <Box
+      w="100%"
+      bg="#82ccfc"
+      borderWidth="1px"
+      borderRadius="lg"
+      p={2}
+      onClick={onViewClickHandle}
+      cursor="pointer"
+    >
+      {/* <LinkOverlay href="/order/view" onClick={onViewClickHandle}> */}
       <Flex>
         <Flex gap={3} align="center" justify="center">
           <HStack>
@@ -59,6 +77,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
             </Text>
           </HStack>
         </Flex>
+
         <Spacer />
         <Box>
           <NextLink
@@ -78,6 +97,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
           </NextLink>
         </Box>
       </Flex>
+      {/* </LinkOverlay> */}
     </Box>
   );
 };

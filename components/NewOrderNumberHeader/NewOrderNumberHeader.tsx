@@ -46,10 +46,17 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
           textAlign="center"
           value={number}
           onChange={onChangeHandle}
+          isReadOnly={editOrder.isReadOnly}
         />
       </HStack>
       <Spacer />
-      <Button bg="#e9a31e" color="#044786" onClick={onCreateHandle}>
+
+      <Button
+        bg="#e9a31e"
+        color="#044786"
+        onClick={onCreateHandle}
+        hidden={editOrder.isReadOnly}
+      >
         {editOrder.isNew ? "Створити" : "Зберегти"}
       </Button>
     </Flex>
