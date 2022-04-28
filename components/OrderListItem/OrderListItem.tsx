@@ -35,6 +35,10 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
     setEditOrder({ order: order, isNew: false, isReadOnly: false });
     router.push("/order/edit");
   }
+  function onViewClickHandle() {
+    setEditOrder({ order: order, isNew: false, isReadOnly: true });
+    router.push("/order/view");
+  }
 
   let StatusIcon;
   switch (order.Status) {
@@ -49,24 +53,16 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
       break;
   }
 
-  function onViewClickHandle() {
-    setEditOrder({ order: order, isNew: false, isReadOnly: true });
-    router.push("/order/view");
-  }
-
   return (
-    <Box
-      w="100%"
-      bg="#82ccfc"
-      borderWidth="1px"
-      borderRadius="lg"
-      p={2}
-      onClick={onViewClickHandle}
-      cursor="pointer"
-    >
-      {/* <LinkOverlay href="/order/view" onClick={onViewClickHandle}> */}
+    <Box w="100%" bg="#82ccfc" borderWidth="1px" borderRadius="lg" p={2}>
       <Flex>
-        <Flex gap={3} align="center" justify="center">
+        <Flex
+          gap={3}
+          align="center"
+          justify="center"
+          onClick={onViewClickHandle}
+          cursor="pointer"
+        >
           <HStack>
             {StatusIcon}
             <Text fontSize="20px">заявка № </Text>
