@@ -124,7 +124,7 @@ const OrderComponent: NextPage = () => {
   if (!editOrder) return <Text>Нема що правити</Text>;
 
   return (
-    <Container minW={600} maxW={600} h="100vh">
+    <Container maxW={600} h="100vh">
       <Grid templateRows="50px 60px 1fr" h="100%">
         <GridItem bg="#044786" p="0 8px">
           <NewOrderNumberHeader

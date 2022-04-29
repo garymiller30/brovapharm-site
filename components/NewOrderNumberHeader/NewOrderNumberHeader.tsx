@@ -30,7 +30,11 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
   return (
     <Flex align="center" h="100%">
       <Box>
-        <Heading as="h3" size="md" color="white">
+        <Heading
+          as="h3"
+          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
+          color="white"
+        >
           Бровафарма
         </Heading>
       </Box>
@@ -41,7 +45,7 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
           w="70px"
           size="sm"
           color="white"
-          fontSize="md"
+          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
           fontWeight="bold"
           textAlign="center"
           value={number}
