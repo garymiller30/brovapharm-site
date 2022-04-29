@@ -89,11 +89,16 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
         >
           <HStack>
             {StatusIcon}
-            <Text fontSize="20px">заявка № </Text>
-            <Text fontSize="20px" fontWeight="bold">
+            <Text fontSize={{ base: "16px", md: "18px", lg: "20px" }}>
+              заявка №{" "}
+            </Text>
+            <Text
+              fontSize={{ base: "16px", md: "18px", lg: "20px" }}
+              fontWeight="bold"
+            >
               {order.Number}
             </Text>
-            <Text fontSize="20px">
+            <Text fontSize={{ base: "16px", md: "18px", lg: "20px" }}>
               ({date.getDate()}.{date.getMonth()}.{date.getFullYear()})
             </Text>
           </HStack>
