@@ -20,13 +20,11 @@ interface OrdersProps {
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
   return (
     <Container maxW={600}>
-      {/* <VStack gap={3}> */}
       <Center m="0 0 20px 0">
         <Text fontSize="4xl">заявки</Text>
       </Center>
 
       <OrderList orders={orders} />
-      {/* </VStack> */}
     </Container>
   );
 };

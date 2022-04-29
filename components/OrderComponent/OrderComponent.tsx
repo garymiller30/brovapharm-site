@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
 import psCheck from "../../lib/psCheck";
+import { useToastHook } from "../../lib/toast";
+
 import Order from "../../models/order";
 import PS from "../../models/ps";
 import PsItem from "../../models/psItem";
@@ -19,16 +21,12 @@ import NewOrderMenu from "../NewOrderMenu/NewOrderMenu";
 import NewOrderNumberHeader from "../NewOrderNumberHeader/NewOrderNumberHeader";
 import PresssheetContainer from "../PresssheetContainer/PresssheetContainer";
 
-const toastOptions: UseToastOptions = {
-  status: "error",
-  duration: 5000,
-  isClosable: true,
-};
 const OrderComponent: NextPage = () => {
-  const [editOrder, setEditOrder] = useRecoilState(editOrderState);
+  const [editOrder] = useRecoilState(editOrderState);
   const [psArr, setPsArr] = useState<PS[]>([]);
   const [orderNum, setOrderNum] = useState<number>(0);
   const router = useRouter();
+  const [, newToast] = useToastHook();
 
   useEffect(() => {
     if (editOrder) {
@@ -50,16 +48,6 @@ const OrderComponent: NextPage = () => {
     }
   }, [editOrder]);
 
-  const toast = useToast();
-
-  const showErrToast = (description: string) => {
-    toast({ ...toastOptions, description });
-  };
-
-  const showSuccessToast = (description: string) => {
-    toast({ ...toastOptions, description, status: "success" });
-  };
-
   function onAddHandle() {
     setPsArr([...psArr, new PS(psArr.length + 1)]);
   }
@@ -73,6 +61,14 @@ const OrderComponent: NextPage = () => {
           return p;
         })
     );
+  }
+
+  function showErrToast(message: string) {
+    newToast({ message, status: "error" });
+  }
+
+  function showSuccessToast(message: string) {
+    newToast({ message, status: "success" });
   }
 
   const onCreateHandle = async () => {
