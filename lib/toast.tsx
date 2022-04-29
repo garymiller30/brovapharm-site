@@ -12,10 +12,9 @@ export function useToastHook<useToastHookProps>() {
 
   useEffect(() => {
     if (state) {
-      const { message, status } = state;
+      const { message, status } = state as any;
 
       toast({
-        title: status,
         description: message,
         status: status,
         duration: 3000,
