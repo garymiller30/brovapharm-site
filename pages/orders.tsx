@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { GetServerSideProps } from "next";
+import AddOrderButton from "../components/AddOrderButton/AddOrderButton";
 import OrderList from "../components/OrderList/OrderList";
 
 import connectToDatabase from "../lib/connectToDatabase";
@@ -19,12 +20,13 @@ interface OrdersProps {
 
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
   return (
-    <Container maxW={600}>
+    <Container maxW={600} position="relative" h="100vh">
       <Center m="0 0 20px 0">
         <Text fontSize="4xl">заявки</Text>
       </Center>
 
       <OrderList orders={orders} />
+      <AddOrderButton />
     </Container>
   );
 };

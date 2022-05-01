@@ -1,5 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { Box, Flex, Grid, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Grid, IconButton, useMediaQuery } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -19,20 +19,23 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
 }) => {
   const [back, setBack] = useState<boolean>(ps.Back);
   const [editOrder] = useRecoilState(editOrderState);
+
+  const [isMobile] = useMediaQuery("(max-width: 420px)");
+
   const onChangeHandle = () => {
     setBack(ps.Back);
   };
 
   return (
     <Flex
-      h="150px"
-      w="100%"
       bg="#bde5ff"
       position="relative"
       top={0}
       left={0}
       p={2}
       borderRadius={5}
+      align="center"
+      direction={{ base: "column-reverse", md: "row" }}
     >
       <PressSheet key={ps.Id.toString()} ps={ps} />
       <PresssheetContainerItemParam ps={ps} onChange={onChangeHandle} />

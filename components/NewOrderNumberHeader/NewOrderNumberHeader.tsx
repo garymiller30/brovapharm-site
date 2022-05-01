@@ -1,5 +1,11 @@
 import type { NextPage } from "next";
-import { Box, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Text,
+  useBreakpointValue,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
@@ -19,6 +25,8 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
   onCreate,
 }) => {
   const [editOrder] = useRecoilState(editOrderState);
+  const [isMobile] = useMediaQuery("(max-width: 420px)");
+
   const onChangeHandle = (event: any) => {
     onChange(Number(event.target.value));
   };
@@ -27,25 +35,25 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
     onCreate();
   };
 
+  const fontSize = { base: "14px", md: "20px", lg: "20px" };
+
   return (
     <Flex align="center" h="100%">
       <Box>
-        <Heading
-          as="h3"
-          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
-          color="white"
-        >
+        <Heading as="h3" fontSize={fontSize} color="white" hidden={isMobile}>
           Бровафарма
         </Heading>
       </Box>
       <Spacer />
       <HStack>
-        <Box color="white">Заявка № </Box>
+        <Text color="white" fontSize={fontSize}>
+          Заявка №{" "}
+        </Text>
         <Input
-          w="70px"
+          w={[50, 70]}
           size="sm"
           color="white"
-          fontSize={{ base: "16px", md: "18px", lg: "20px" }}
+          fontSize={fontSize}
           fontWeight="bold"
           textAlign="center"
           value={number}

@@ -14,7 +14,7 @@ const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
   onDelete,
 }) => {
   return (
-    <VStack divider={<StackDivider borderColor="gray.200" />}>
+    <Flex w="100%" wrap="wrap" gap={3} justify="center">
       {psArr.map((p) => (
         <PresssheetContainerItem
           key={p.Id.toString()}
@@ -22,7 +22,7 @@ const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
           onDelete={onDelete}
         />
       ))}
-    </VStack>
+    </Flex>
   );
 };
 
