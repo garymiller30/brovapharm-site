@@ -1,15 +1,22 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { NextRouter, useRouter, withRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
 import OrderComponent from "../../components/OrderComponent/OrderComponent";
-import Order from "../../models/order";
+import { Spinner } from "@chakra-ui/react";
 
 const ViewOrder: NextPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [editOrder, setEditOrder] = useRecoilState(editOrderState);
   const router = useRouter();
+
+  useEffect(() => {
+    setLoading(true);
+    console.log("router.isReady", router.isReady);
+  }, []);
+
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -29,14 +36,23 @@ const ViewOrder: NextPage = () => {
     }
   }, [editOrder, router.isReady]);
 
-  if (!editOrder.order) {
+  if (!loading || !router.isReady || !editOrder.order)
     return (
-      <Box>
-        <Text>Нема що дивитись</Text>
-        <Button onClick={() => router.back()}>Назад</Button>
+      <Box w="100vw" h="100vh">
+        <Center h="100%">
+          <Spinner size="xl" /> <Text m={5}>Завантажую...</Text>
+        </Center>
       </Box>
     );
-  }
+
+  // if (!editOrder.order) {
+  //   return (
+  //     <Box>
+  //       <Text>Нема що дивитись</Text>
+  //       <Button onClick={() => router.back()}>Назад</Button>
+  //     </Box>
+  //   );
+  // }
   return <OrderComponent />;
 };
 
