@@ -88,7 +88,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
           cursor="pointer"
         >
           <HStack>
-            {StatusIcon}
+            {/* {StatusIcon} */}
             <Text fontSize={{ base: "16px", md: "18px", lg: "20px" }}>
               заявка №{" "}
             </Text>
