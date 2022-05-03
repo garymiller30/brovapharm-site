@@ -27,15 +27,21 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
         </Button>
       </ButtonGroup>
       <Spacer />
-      <Text color="white">Листів: </Text>
-      <Text fontWeight="bold" marginLeft={2} color="white">
-        {cntSheets}
-      </Text>
-      <Spacer />
-      <Text color="white">Тираж:</Text>
-      <Text fontWeight="bold" marginLeft={2} color="white">
-        {cnt}
-      </Text>
+      <Flex wrap="wrap" marginLeft={2}>
+        <HStack margin="0 3px ">
+          <Text color="white">Листів: </Text>
+          <Text fontWeight="bold" marginLeft={2} color="white">
+            {cntSheets}
+          </Text>
+        </HStack>
+
+        <HStack margin="0 3px ">
+          <Text color="white">Тираж:</Text>
+          <Text fontWeight="bold" marginLeft={2} color="white">
+            {cnt}
+          </Text>
+        </HStack>
+      </Flex>
     </Flex>
   );
 };
