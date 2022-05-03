@@ -28,7 +28,7 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
   const [editOrder] = useRecoilState(editOrderState);
 
   //const [isMobile] = useMediaQuery("(max-width: 420px)");
-  const buttonSize = useBreakpointValue(["xs", "md"]);
+  //const buttonSize = useBreakpointValue(["xs", "xs"]);
   const onChangeHandle = () => {
     setBack(ps.Back);
   };
@@ -54,7 +54,7 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
         top={2}
         onClick={() => onDelete(ps)}
         hidden={editOrder.isReadOnly}
-        size={buttonSize}
+        size={"xs"}
       />
     </Flex>
   );

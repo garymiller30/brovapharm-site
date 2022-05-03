@@ -133,12 +133,7 @@ const OrderComponent: NextPage = () => {
             onCreate={onCreateHandle}
           />
         </GridItem>
-        <GridItem
-          p="0 8px"
-          bg="#109dec"
-          borderBottomRadius={5}
-          hidden={editOrder.isReadOnly}
-        >
+        <GridItem p="0 8px" bg="#109dec" borderBottomRadius={5}>
           <NewOrderMenu onAdd={onAddHandle} />
         </GridItem>
         <GridItem p="0 8px" m="8px 0 0 0">
