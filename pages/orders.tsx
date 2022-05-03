@@ -34,14 +34,22 @@ const Orders: NextPage<OrdersProps> = ({ orders }) => {
 export default Orders;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const collection = await connectToDatabase();
-  const orders = await collection.find().toArray();
+  const protocol = context.req.headers["x-forwarded-proto"] || "http";
+  const baseUrl = context.req
+    ? `${protocol}://${context.req.headers.host}`
+    : "";
+
+  const res = await fetch(`${baseUrl}/api/order`);
+  const orders = await res.json();
+  // const collection = await connectToDatabase();
+  // const orders = await collection.find().toArray();
 
   return {
     props: {
-      orders: orders.map((o) =>
-        JSON.parse(JSON.stringify({ ...o, id: o._id }))
-      ),
+      orders,
+      // orders: orders.map((o) =>
+      //   JSON.parse(JSON.stringify({ ...o, id: o._id }))
+      // ),
     },
   };
 };

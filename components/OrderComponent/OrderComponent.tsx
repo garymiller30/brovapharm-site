@@ -124,15 +124,6 @@ const OrderComponent: NextPage = () => {
     }
   }
 
-  if (!editOrder.order) {
-    return (
-      <Box>
-        <Text>Нема що правити</Text>
-        <Button onClick={() => router.back()}>Назад</Button>
-      </Box>
-    );
-  }
-
   return (
     <Container maxW={600} h="100vh">
       <Grid templateRows="50px 60px 1fr" h="100%">

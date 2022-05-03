@@ -39,7 +39,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
   }
   function onViewClickHandle() {
     setEditOrder({ order: order, isNew: false, isReadOnly: true });
-    router.push("/order/view");
+    router.push(`/order/view?id=${order.id}`);
   }
 
   function showSuccessToast(message: string) {
