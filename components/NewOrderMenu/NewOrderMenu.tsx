@@ -13,8 +13,8 @@ interface NewOrderMenuProps {
 const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
   const [editOrder] = useRecoilState(editOrderState);
 
-  const cntSheets = editOrder.order.sheets.length;
-  const cnt = editOrder.order.sheets.reduce((p, c) => p + c.Count, 0);
+  const cntSheets = editOrder.order?.sheets.length;
+  const cnt = editOrder.order?.sheets.reduce((p, c) => p + c.Count, 0);
   return (
     <Flex align="center" h="100%">
       <ButtonGroup>

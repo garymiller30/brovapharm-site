@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Container,
   Grid,
   GridItem,
@@ -29,7 +31,7 @@ const OrderComponent: NextPage = () => {
   const [, newToast] = useToastHook();
 
   useEffect(() => {
-    if (editOrder) {
+    if (editOrder.order) {
       setPsArr(
         editOrder.order.sheets.map((s) => {
           const ns = new PS(s.Number);
@@ -108,20 +110,28 @@ const OrderComponent: NextPage = () => {
         showErrToast((error as Error).message);
       }
     } else {
-      const order: Order = {
-        ...editOrder.order,
-        Number: orderNum,
-        sheets: [...psArr],
-      };
-
-      await fetch("/api/order", {
-        method: "PUT",
-        body: JSON.stringify(order),
-      });
+      if (editOrder.order) {
+        const order: Order = {
+          ...editOrder.order,
+          Number: orderNum,
+          sheets: [...psArr],
+        };
+        await fetch("/api/order", {
+          method: "PUT",
+          body: JSON.stringify(order),
+        });
+      }
     }
   }
 
-  if (!editOrder) return <Text>Нема що правити</Text>;
+  if (!editOrder.order) {
+    return (
+      <Box>
+        <Text>Нема що правити</Text>
+        <Button onClick={() => router.back()}>Назад</Button>
+      </Box>
+    );
+  }
 
   return (
     <Container maxW={600} h="100vh">

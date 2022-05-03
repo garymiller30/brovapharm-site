@@ -2,12 +2,12 @@ import { atom } from "recoil";
 import Order from "../models/order";
 
 interface editOrderStateProps {
-    order: Order,
-    isNew: boolean,
+    order?: Order,
+    isNew?: boolean,
     isReadOnly?: boolean
 }
 
 export const editOrderState = atom<editOrderStateProps>({
     key: "editOrderState",
-    default: { order: new Order(), isNew: true }
+    default: { order: undefined }
 })
