@@ -127,8 +127,8 @@ const OrderComponent: NextPage = () => {
 
   return (
     <>
-      <title>Бровафарма | Заявка</title>
       <Head>
+        <title>Бровафарма | Заявка</title>
         <meta
           name="description"
           content="Бровафарма, заявка, друк, лист, тираж"
