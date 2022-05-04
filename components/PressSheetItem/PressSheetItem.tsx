@@ -35,7 +35,9 @@ const PressSheetItem: NextPage<PressSheetItemProps> = ({ disabled, page }) => {
     <GridItem w="100%" h="100%" border="1px solid gray" bg={"#82ccfc"}>
       <Center w="100%" h="100%">
         {editOrder.isReadOnly ? (
-          <Text fontSize="20px">{val}</Text>
+          disabled ? null : (
+            <Text fontSize="20px">{val}</Text>
+          )
         ) : (
           <NumberInput
             w="70%"
