@@ -31,7 +31,6 @@ async function getOrderApi(req: NextApiRequest, res: NextApiResponse) {
     const id = req.query.id as string;
     if (id) {
         const order = await getOrderById(id) as Order;
-        console.log(order)
         return res.status(200).json(JSON.parse(JSON.stringify({ ...order })));
     }
     else {
