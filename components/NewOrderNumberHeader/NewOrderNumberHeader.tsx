@@ -49,17 +49,23 @@ const NewOrderNumberHeader: NextPage<NewOrderNumberHeaderProps> = ({
         <Text color="white" fontSize={fontSize}>
           Заявка №{" "}
         </Text>
-        <Input
-          w={[50, 70]}
-          size="sm"
-          color="white"
-          fontSize={fontSize}
-          fontWeight="bold"
-          textAlign="center"
-          value={number}
-          onChange={onChangeHandle}
-          isReadOnly={editOrder.isReadOnly}
-        />
+        {editOrder.isReadOnly ? (
+          <Text fontSize={fontSize} fontWeight="bold" color="yellow">
+            {number}
+          </Text>
+        ) : (
+          <Input
+            w={[50, 70]}
+            size="sm"
+            color="white"
+            fontSize={fontSize}
+            fontWeight="bold"
+            textAlign="center"
+            value={number}
+            onChange={onChangeHandle}
+            isReadOnly={editOrder.isReadOnly}
+          />
+        )}
       </HStack>
       <Spacer />
 
