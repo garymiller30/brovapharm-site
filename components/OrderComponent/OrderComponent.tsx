@@ -9,6 +9,7 @@ import {
   UseToastOptions,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -127,10 +128,13 @@ const OrderComponent: NextPage = () => {
   return (
     <>
       <title>Бровафарма | Заявка</title>
-      <meta
-        name="description"
-        content="Бровафарма, заявка, друк, лист, тираж"
-      ></meta>
+      <Head>
+        <meta
+          name="description"
+          content="Бровафарма, заявка, друк, лист, тираж"
+        ></meta>
+      </Head>
+
       <Container maxW={{ base: 440, md: 600, lg: 1000 }} h="100vh">
         <Grid templateRows="50px 60px 1fr" h="100%">
           <GridItem bg="#044786" p="0 8px">
