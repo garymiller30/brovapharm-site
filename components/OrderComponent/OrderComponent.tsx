@@ -125,23 +125,30 @@ const OrderComponent: NextPage = () => {
   }
 
   return (
-    <Container maxW={{ base: 440, md: 600, lg: 1000 }} h="100vh">
-      <Grid templateRows="50px 60px 1fr" h="100%">
-        <GridItem bg="#044786" p="0 8px">
-          <NewOrderNumberHeader
-            number={orderNum}
-            onChange={(val) => setOrderNum(val)}
-            onCreate={onCreateHandle}
-          />
-        </GridItem>
-        <GridItem p="0 8px" bg="#109dec" borderBottomRadius={5}>
-          <NewOrderMenu onAdd={onAddHandle} />
-        </GridItem>
-        <GridItem p="0 8px" m="8px 0 0 0">
-          <PresssheetContainer psArr={psArr} onDelete={onDeleteHandle} />
-        </GridItem>
-      </Grid>
-    </Container>
+    <>
+      <title>Бровафарма | Заявка</title>
+      <meta
+        name="description"
+        content="Бровафарма, заявка, друк, лист, тираж"
+      ></meta>
+      <Container maxW={{ base: 440, md: 600, lg: 1000 }} h="100vh">
+        <Grid templateRows="50px 60px 1fr" h="100%">
+          <GridItem bg="#044786" p="0 8px">
+            <NewOrderNumberHeader
+              number={orderNum}
+              onChange={(val) => setOrderNum(val)}
+              onCreate={onCreateHandle}
+            />
+          </GridItem>
+          <GridItem p="0 8px" bg="#109dec" borderBottomRadius={5}>
+            <NewOrderMenu onAdd={onAddHandle} />
+          </GridItem>
+          <GridItem p="0 8px" m="8px 0 0 0">
+            <PresssheetContainer psArr={psArr} onDelete={onDeleteHandle} />
+          </GridItem>
+        </Grid>
+      </Container>
+    </>
   );
 };
 
