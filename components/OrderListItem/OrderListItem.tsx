@@ -99,7 +99,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
               {order.Number}
             </Text>
             <Text fontSize={{ base: "16px", md: "18px", lg: "20px" }}>
-              ({date.getDate()}.{date.getMonth()}.{date.getFullYear()})
+              ({date.getDate()}.{date.getMonth() + 1}.{date.getFullYear()})
             </Text>
           </HStack>
         </Flex>
