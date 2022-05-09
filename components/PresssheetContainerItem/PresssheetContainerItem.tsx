@@ -35,6 +35,8 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
 
   return (
     <Flex
+      _focus={{ backgroundColor: "yellow" }}
+      _hover={{ backgroundColor: "yellow" }}
       bg="#bde5ff"
       position="relative"
       top={0}
