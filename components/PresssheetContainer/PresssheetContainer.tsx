@@ -7,11 +7,13 @@ import { useState } from "react";
 interface PresssheetContainerProps {
   psArr: PS[];
   onDelete: (ps: PS) => void;
+  onSwitchFinished: (ps: PS) => void;
 }
 
 const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
   psArr = [],
   onDelete,
+  onSwitchFinished,
 }) => {
   return (
     <Flex w="100%" wrap="wrap" gap={3} justify="center">
@@ -20,6 +22,7 @@ const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
           key={p.Id.toString()}
           ps={p}
           onDelete={onDelete}
+          onSwitchFinished={onSwitchFinished}
         />
       ))}
     </Flex>

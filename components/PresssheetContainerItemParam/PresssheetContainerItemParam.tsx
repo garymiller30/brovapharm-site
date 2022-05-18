@@ -12,9 +12,10 @@ import {
   Radio,
   RadioGroup,
   Text,
+  Switch,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
 

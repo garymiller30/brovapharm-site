@@ -14,6 +14,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
+import { clientAddOrder } from "../../lib/client/order/clientAddOrder";
+import { clientUpdateOrder } from "../../lib/client/order/clientUpdateOrder";
 import psCheck from "../../lib/psCheck";
 import { useToastHook } from "../../lib/toast";
 
@@ -25,7 +27,7 @@ import NewOrderNumberHeader from "../NewOrderNumberHeader/NewOrderNumberHeader";
 import PresssheetContainer from "../PresssheetContainer/PresssheetContainer";
 
 const OrderComponent: NextPage = () => {
-  const [editOrder] = useRecoilState(editOrderState);
+  const [editOrder, setEditOrder] = useRecoilState(editOrderState);
   const [psArr, setPsArr] = useState<PS[]>([]);
   const [orderNum, setOrderNum] = useState<number>(0);
   const router = useRouter();
@@ -39,6 +41,7 @@ const OrderComponent: NextPage = () => {
           ns.Back = s.Back;
           ns.Count = s.Count;
           ns.Id = s.Id;
+          ns.isFinished = s.isFinished;
           ns.pages = s.pages.map((p) => {
             const np = new PsItem(p.Id);
             np.Number = p.Number;
@@ -64,6 +67,23 @@ const OrderComponent: NextPage = () => {
           return p;
         })
     );
+  }
+
+  async function onSwitchFinishedHandle(ps: PS) {
+    try {
+      if (editOrder.order) {
+        const order: Order = {
+          ...editOrder.order,
+          sheets: editOrder.order.sheets.map((p) => (p.Id === ps.Id ? ps : p)),
+        };
+        await clientUpdateOrder(order);
+        showSuccessToast("оновлено!");
+        setPsArr(psArr.map((p) => (p.Id === ps.Id ? ps : p)));
+        setEditOrder({ ...editOrder, order });
+      }
+    } catch (error: unknown) {
+      showErrToast((error as Error).message);
+    }
   }
 
   function showErrToast(message: string) {
@@ -102,10 +122,8 @@ const OrderComponent: NextPage = () => {
     if (editOrder.isNew) {
       try {
         const order: Order = new Order(orderNum, psArr);
-        await fetch("/api/order", {
-          method: "POST",
-          body: JSON.stringify(order),
-        });
+        await clientAddOrder(order);
+
         showSuccessToast("Замовлення створено!");
       } catch (error: unknown) {
         showErrToast((error as Error).message);
@@ -117,10 +135,12 @@ const OrderComponent: NextPage = () => {
           Number: orderNum,
           sheets: [...psArr],
         };
-        await fetch("/api/order", {
-          method: "PUT",
-          body: JSON.stringify(order),
-        });
+        try {
+          await clientUpdateOrder(order);
+          showSuccessToast("Замовлення збережено!");
+        } catch (error: unknown) {
+          showErrToast((error as Error).message);
+        }
       }
     }
   }
@@ -148,7 +168,11 @@ const OrderComponent: NextPage = () => {
             <NewOrderMenu onAdd={onAddHandle} />
           </GridItem>
           <GridItem p="0 8px" m="8px 0 0 0">
-            <PresssheetContainer psArr={psArr} onDelete={onDeleteHandle} />
+            <PresssheetContainer
+              psArr={psArr}
+              onDelete={onDeleteHandle}
+              onSwitchFinished={onSwitchFinishedHandle}
+            />
           </GridItem>
         </Grid>
       </Container>

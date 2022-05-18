@@ -10,7 +10,7 @@ export default async function updateOrder(order: Order) {
             $set: {
                 Number: order.Number,
                 Status: order.Status,
-                sheets: order.sheets
+                sheets: order.sheets,
             }
         }, { upsert: true });
     } catch (err: unknown) {

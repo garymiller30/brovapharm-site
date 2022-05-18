@@ -45,14 +45,6 @@ const ViewOrder: NextPage = () => {
       </Box>
     );
 
-  // if (!editOrder.order) {
-  //   return (
-  //     <Box>
-  //       <Text>Нема що дивитись</Text>
-  //       <Button onClick={() => router.back()}>Назад</Button>
-  //     </Box>
-  //   );
-  // }
   return <OrderComponent />;
 };
 
