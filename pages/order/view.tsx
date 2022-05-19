@@ -14,7 +14,6 @@ const ViewOrder: NextPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    console.log("router.isReady", router.isReady);
   }, []);
 
   useEffect(() => {

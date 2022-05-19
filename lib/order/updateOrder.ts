@@ -14,7 +14,7 @@ export default async function updateOrder(order: Order) {
             }
         }, { upsert: true });
     } catch (err: unknown) {
-        console.log((err as Error).message);
+
         throw new Error((err as Error).message);
     }
 }
