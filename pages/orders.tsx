@@ -28,7 +28,7 @@ interface OrdersProps {
 
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
   const [, setOrderList] = useRecoilState(orderListState);
-  const [filter, setFilter] = useRecoilState(orderListFilterState);
+  const [, setFilter] = useRecoilState(orderListFilterState);
   const list = useRecoilValue(filteredOrderListState);
 
   useEffect(() => {
