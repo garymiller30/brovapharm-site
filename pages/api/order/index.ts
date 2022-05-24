@@ -5,6 +5,7 @@ import { deleteOrder } from '../../../lib/order/deleteOrder';
 import getOrderById from '../../../lib/order/getOrderById';
 import getOrders from '../../../lib/order/getOrders';
 import updateOrder from '../../../lib/order/updateOrder';
+import { telegramSendMessage } from '../../../lib/telegram';
 import Order from '../../../models/order';
 
 
@@ -41,8 +42,17 @@ async function getOrderApi(req: NextApiRequest, res: NextApiResponse) {
 
 async function addOrderApi(req: NextApiRequest, res: NextApiResponse) {
     const order: Order = JSON.parse(req.body);
-    const ret = await addOrder(order);
-    return res.status(201).json({ ...order, _id: ret.insertedId });
+    try {
+        const ret = await addOrder(order);
+
+        const message = `зайшла заявка <b>№ ${order.Number}</b>`;
+        await telegramSendMessage(message);
+
+        return res.status(201).json({ ...order, _id: ret.insertedId });
+    } catch (error: unknown) {
+        return res.status(500).json({ message: (error as Error).message })
+    }
+
 }
 
 async function updateOrderApi(req: NextApiRequest, res: NextApiResponse) {
