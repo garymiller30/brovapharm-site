@@ -27,7 +27,7 @@ interface OrdersProps {
 }
 
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
-  const [orderList, setOrderList] = useRecoilState(orderListState);
+  const [, setOrderList] = useRecoilState(orderListState);
   const [filter, setFilter] = useRecoilState(orderListFilterState);
   const list = useRecoilValue(filteredOrderListState);
 
@@ -40,7 +40,6 @@ const Orders: NextPage<OrdersProps> = ({ orders }) => {
       <Center m="0 0 5px 0">
         <Text fontSize="4xl">заявки</Text>
       </Center>
-
       <ButtonGroup
         display="flex"
         w="100%"
