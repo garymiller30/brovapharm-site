@@ -19,6 +19,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
+import { orderListState } from "../../atoms/orderListState";
 import { useToastHook } from "../../lib/toast";
 import Order from "../../models/order";
 import { ORDER_STATUS } from "../../var/orderStatusEnum";
@@ -29,6 +30,8 @@ interface OrderListItemProps {
 
 const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
   const [, setEditOrder] = useRecoilState(editOrderState);
+  const [orderList, setOrderList] = useRecoilState(orderListState);
+
   const [, newToast] = useToastHook();
   const router = useRouter();
   const date = new Date(order.CreateDate);
@@ -57,8 +60,7 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
       });
 
       showSuccessToast("заявка видалена");
-
-      router.push("/orders");
+      setOrderList(orderList.filter((o) => o.id != order.id));
     } catch (err: unknown) {
       showErrToast((err as Error).message);
     }
