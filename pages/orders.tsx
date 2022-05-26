@@ -21,6 +21,7 @@ import OrderList from "../components/OrderList/OrderList";
 import connectToDatabase from "../lib/connectToDatabase";
 import Order from "../models/order";
 import { filteredOrderListState } from "../selectors/filteredOrderListState";
+import { ORDERLIST_FILTER_ENUM } from "../var/ORDERLIST_FILTER_ENUM";
 
 interface OrdersProps {
   orders: Order[];
@@ -28,7 +29,7 @@ interface OrdersProps {
 
 const Orders: NextPage<OrdersProps> = ({ orders }) => {
   const [, setOrderList] = useRecoilState(orderListState);
-  const [, setFilter] = useRecoilState(orderListFilterState);
+  const [filter, setFilter] = useRecoilState(orderListFilterState);
   const list = useRecoilValue(filteredOrderListState);
 
   useEffect(() => {
@@ -46,9 +47,30 @@ const Orders: NextPage<OrdersProps> = ({ orders }) => {
         justifyContent="center"
         marginBottom={2}
       >
-        <Button onClick={() => setFilter("Show All")}>Всі</Button>
-        <Button onClick={() => setFilter("Show Completed")}>Виконані</Button>
-        <Button onClick={() => setFilter("Show Uncompleted")}>В роботі</Button>
+        <Button
+          onClick={() => setFilter(ORDERLIST_FILTER_ENUM.ALL)}
+          colorScheme={
+            filter === ORDERLIST_FILTER_ENUM.ALL ? "facebook" : "gray"
+          }
+        >
+          Всі
+        </Button>
+        <Button
+          onClick={() => setFilter(ORDERLIST_FILTER_ENUM.COMPLETED)}
+          colorScheme={
+            filter === ORDERLIST_FILTER_ENUM.COMPLETED ? "facebook" : "gray"
+          }
+        >
+          Виконані
+        </Button>
+        <Button
+          onClick={() => setFilter(ORDERLIST_FILTER_ENUM.UNCOMPLETED)}
+          colorScheme={
+            filter === ORDERLIST_FILTER_ENUM.UNCOMPLETED ? "facebook" : "gray"
+          }
+        >
+          В роботі
+        </Button>
       </ButtonGroup>
 
       <OrderList orders={list} />
