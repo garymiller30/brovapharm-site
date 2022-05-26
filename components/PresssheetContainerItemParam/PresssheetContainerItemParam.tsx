@@ -25,11 +25,12 @@ import { PAGE_BACK } from "../../var/pageBackEnum";
 interface PresssheetContainerItemParamProps {
   ps: PS;
   onChange: () => void;
+  onCountChanged: (ps: PS) => void;
 }
 
 const PresssheetContainerItemParam: NextPage<
   PresssheetContainerItemParamProps
-> = ({ ps, onChange }) => {
+> = ({ ps, onChange, onCountChanged }) => {
   const [back, setBack] = useState<string>(ps.Back.toString());
   const [count, setCount] = useState<number>(ps.Count);
   const [editOrder] = useRecoilState(editOrderState);
@@ -44,6 +45,7 @@ const PresssheetContainerItemParam: NextPage<
   const onChangeCountHandle = (val: string) => {
     ps.Count = Number(val);
     setCount(ps.Count);
+    onCountChanged(ps);
   };
 
   return (

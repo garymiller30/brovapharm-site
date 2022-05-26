@@ -8,12 +8,14 @@ interface PresssheetContainerProps {
   psArr: PS[];
   onDelete: (ps: PS) => void;
   onSwitchFinished: (ps: PS) => void;
+  onCountChanged: (ps: PS) => void;
 }
 
 const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
   psArr = [],
   onDelete,
   onSwitchFinished,
+  onCountChanged,
 }) => {
   return (
     <Flex w="100%" wrap="wrap" gap={3} justify="center">
@@ -23,6 +25,7 @@ const PresssheetContainer: NextPage<PresssheetContainerProps> = ({
           ps={p}
           onDelete={onDelete}
           onSwitchFinished={onSwitchFinished}
+          onCountChanged={onCountChanged}
         />
       ))}
     </Flex>

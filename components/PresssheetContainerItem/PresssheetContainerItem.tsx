@@ -24,12 +24,14 @@ interface PressSheetContainerItemProps {
   ps: PS;
   onDelete: (ps: PS) => void;
   onSwitchFinished: (ps: PS) => void;
+  onCountChanged: (ps: PS) => void;
 }
 
 const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
   ps,
   onDelete,
   onSwitchFinished,
+  onCountChanged,
 }) => {
   const [back, setBack] = useState<boolean>(ps.Back);
   const [editOrder] = useRecoilState(editOrderState);
@@ -61,7 +63,11 @@ const PresssheetContainerItem: NextPage<PressSheetContainerItemProps> = ({
       direction={{ base: "column-reverse", md: "row" }}
     >
       <PressSheet key={ps.Id.toString()} ps={ps} />
-      <PresssheetContainerItemParam ps={ps} onChange={onChangeHandle} />
+      <PresssheetContainerItemParam
+        ps={ps}
+        onChange={onChangeHandle}
+        onCountChanged={onCountChanged}
+      />
       <IconButton
         aria-label="delete"
         icon={<CloseIcon />}

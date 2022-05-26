@@ -55,18 +55,45 @@ const OrderComponent: NextPage = () => {
   }, [editOrder]);
 
   function onAddHandle() {
-    setPsArr([...psArr, new PS(psArr.length + 1)]);
+    const newArr = [...psArr, new PS(psArr.length + 1)];
+    setPsArr(newArr);
+    const updateOrder = { ...editOrder };
+    if (updateOrder.order && editOrder.order) {
+      updateOrder.order = { ...editOrder.order };
+      updateOrder.order.sheets = newArr;
+
+      setEditOrder(updateOrder);
+    }
   }
 
   function onDeleteHandle(ps: PS) {
-    setPsArr(
-      psArr
-        .filter((p) => p.Number != ps.Number)
-        .map((p, idx) => {
-          p.Number = idx + 1;
-          return p;
-        })
-    );
+    const newArr = psArr
+      .filter((p) => p.Number != ps.Number)
+      .map((p, idx) => {
+        p.Number = idx + 1;
+        return p;
+      });
+
+    setPsArr(newArr);
+
+    const updateOrder = { ...editOrder };
+    if (updateOrder.order && editOrder.order) {
+      updateOrder.order = { ...editOrder.order };
+      updateOrder.order.sheets = newArr;
+
+      setEditOrder(updateOrder);
+    }
+  }
+
+  function onCountChangedHandle(ps: PS) {
+    const updateOrder = { ...editOrder };
+    if (updateOrder.order && editOrder.order) {
+      updateOrder.order = { ...editOrder.order };
+      updateOrder.order.sheets = editOrder.order.sheets.map((s) =>
+        s.Id === ps.Id ? ps : s
+      );
+      setEditOrder(updateOrder);
+    }
   }
 
   async function onSwitchFinishedHandle(ps: PS) {
@@ -172,6 +199,7 @@ const OrderComponent: NextPage = () => {
               psArr={psArr}
               onDelete={onDeleteHandle}
               onSwitchFinished={onSwitchFinishedHandle}
+              onCountChanged={onCountChangedHandle}
             />
           </GridItem>
         </Grid>
