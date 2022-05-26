@@ -182,7 +182,7 @@ const OrderComponent: NextPage = () => {
         ></meta>
       </Head>
 
-      <Container maxW={{ base: 440, md: 600, lg: 1000 }} h="100vh">
+      <Container maxW={{ base: 600, md: 700, lg: 1000 }} h="100vh">
         <Grid templateRows="50px 60px 1fr" h="100%">
           <GridItem bg="#044786" p="0 8px">
             <NewOrderNumberHeader
