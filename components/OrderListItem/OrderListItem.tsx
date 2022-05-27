@@ -79,8 +79,20 @@ const OrderListItem: NextPage<OrderListItemProps> = ({ order }) => {
       break;
   }
 
+  const completePercent: number =
+    (100 * order.sheets.filter((s) => s.isFinished).length) /
+    order.sheets.length;
+  const gradient = `linear(to-r,LightGreen 0%, LightGreen ${completePercent}%, #82ccfc ${completePercent}%, #82ccfc 100%)`;
   return (
-    <Box w="100%" bg="#82ccfc" borderWidth="1px" borderRadius="lg" p={2}>
+    <Box
+      w="100%"
+      bg="#82ccfc"
+      bgGradient={gradient}
+      borderWidth="1px"
+      borderRadius="lg"
+      p={2}
+      position="relative"
+    >
       <Flex>
         <Flex
           gap={3}
