@@ -13,6 +13,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+
     switch (req.method) {
         case "GET":
             return await getOrderApi(req, res);
@@ -35,6 +36,7 @@ async function getOrderApi(req: NextApiRequest, res: NextApiResponse) {
         return res.status(200).json(JSON.parse(JSON.stringify({ ...order })));
     }
     else {
+
         const orders = await getOrders()
         return res.status(200).json(orders);
     }
@@ -44,9 +46,9 @@ async function addOrderApi(req: NextApiRequest, res: NextApiResponse) {
     const order: Order = JSON.parse(req.body);
     try {
         const ret = await addOrder(order);
-
-        const message = `зайшла заявка <b>№ ${order.Number}</b>`;
-        await telegramSendMessage(message);
+        const message = `зайшла заявка № ${order.Number}`;
+        const url = `https://brovapharma.vercel.app/order/view?id=${ret.insertedId}`
+        await telegramSendMessage(message, url);
 
         return res.status(201).json({ ...order, _id: ret.insertedId });
     } catch (error: unknown) {
