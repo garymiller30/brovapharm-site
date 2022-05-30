@@ -1,5 +1,21 @@
 import type { NextPage } from "next";
-import { Button, ButtonGroup, HStack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  HStack,
+  List,
+  ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
@@ -12,7 +28,7 @@ interface NewOrderMenuProps {
 
 const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
   const [editOrder] = useRecoilState(editOrderState);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const cntSheets = editOrder.order?.sheets.length;
   const cnt = editOrder.order?.sheets.reduce((p, c) => p + c.Count, 0);
   return (
@@ -24,6 +40,9 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
           hidden={editOrder.isReadOnly}
         >
           Додати лист
+        </Button>
+        <Button onClick={onOpen} hidden={!editOrder.isReadOnly}>
+          Список з тиражами
         </Button>
       </ButtonGroup>
       <Spacer />
@@ -42,6 +61,30 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
           </Text>
         </HStack>
       </Flex>
+      <Modal onClose={onClose} isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>список з тиражами</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <List spacing={1}>
+              {editOrder.order?.sheets.map((s) => {
+                return (
+                  <ListItem key={s.Id.toString()}>
+                    <Stack direction="row">
+                      <Text>Лист {s.Number}</Text>
+                      <Text> - {s.Count}</Text>
+                    </Stack>
+                  </ListItem>
+                );
+              })}
+            </List>
+          </ModalBody>
+          {/* <ModalFooter>
+            <Button onClick={onClose}>Закрити</Button>
+          </ModalFooter> */}
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };
