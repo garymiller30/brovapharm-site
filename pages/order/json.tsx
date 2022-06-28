@@ -52,7 +52,7 @@ const OrderJson: NextPage = () => {
       }
     }
     getOrder();
-  }, []);
+  }, [router.isReady]);
 
   if (!router.isReady || !order)
     return (
