@@ -63,11 +63,6 @@ const OrderJson: NextPage = () => {
       </Box>
     );
 
-  //   downloadFile({
-  //     data: JSON.stringify(order),
-  //     fileName: "order.json",
-  //     fileType: "text/json",
-  //   });
   return <Button onClick={exportToJson}>Download</Button>;
   //return <Box>завантажено</Box>;
 };
