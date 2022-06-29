@@ -31,6 +31,39 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cntSheets = editOrder.order?.sheets.length;
   const cnt = editOrder.order?.sheets.reduce((p, c) => p + c.Count, 0);
+
+  interface downloadFileProps {
+    data: string;
+    fileName: string;
+    fileType: string;
+  }
+
+  const downloadFile = ({ data, fileName, fileType }: downloadFileProps) => {
+    // Create a blob with the data we want to download as a file
+    const blob = new Blob([data], { type: fileType });
+    // Create an anchor element and dispatch a click event on it
+    // to trigger a download
+    const a = document.createElement("a");
+    a.download = fileName;
+    a.href = window.URL.createObjectURL(blob);
+    const clickEvt = new MouseEvent("click", {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    a.dispatchEvent(clickEvt);
+    a.remove();
+  };
+
+  const exportToJson = (e: any) => {
+    e.preventDefault();
+    downloadFile({
+      data: JSON.stringify(editOrder.order),
+      fileName: "order.json",
+      fileType: "text/json",
+    });
+  };
+
   return (
     <Flex align="center" h="100%">
       <ButtonGroup>
@@ -41,8 +74,8 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
         >
           Додати лист
         </Button>
-        <Button onClick={onOpen} hidden={!editOrder.isReadOnly}>
-          Список з тиражами
+        <Button onClick={exportToJson} hidden={!editOrder.isReadOnly}>
+          json
         </Button>
       </ButtonGroup>
       <Spacer />
@@ -55,10 +88,12 @@ const NewOrderMenu: NextPage<NewOrderMenuProps> = ({ onAdd }) => {
         </HStack>
 
         <HStack margin="0 3px ">
-          <Text color="white">Тираж:</Text>
-          <Text fontWeight="bold" marginLeft={2} color="white">
-            {cnt}
-          </Text>
+          <Button onClick={onOpen}>
+            <Text>Тираж:</Text>
+            <Text fontWeight="bold" marginLeft={2}>
+              {cnt}
+            </Text>
+          </Button>
         </HStack>
       </Flex>
       <Modal onClose={onClose} isOpen={isOpen}>
