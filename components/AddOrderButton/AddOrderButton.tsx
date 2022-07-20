@@ -19,7 +19,7 @@ const AddOrderButton: NextPage = () => {
       <IconButton
         aria-label="Add Order"
         icon={<AddIcon />}
-        position="absolute"
+        position="fixed"
         bottom={5}
         right={5}
         isRound={true}
