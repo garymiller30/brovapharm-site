@@ -13,15 +13,15 @@ import { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { orderListFilterState } from "../atoms/orderListFilterState";
-import { orderListState } from "../atoms/orderListState";
-import AddOrderButton from "../components/AddOrderButton/AddOrderButton";
-import OrderList from "../components/OrderList/OrderList";
+import { orderListFilterState } from "../../atoms/orderListFilterState";
+import { orderListState } from "../../atoms/orderListState";
+import AddOrderButton from "../../components/AddOrderButton/AddOrderButton";
+import OrderList from "../../components/OrderList/OrderList";
 
-import connectToDatabase from "../lib/connectToDatabase";
-import Order from "../models/order";
-import { filteredOrderListState } from "../selectors/filteredOrderListState";
-import { ORDERLIST_FILTER_ENUM } from "../var/ORDERLIST_FILTER_ENUM";
+import connectToDatabase from "../../lib/connectToDatabase";
+import Order from "../../models/order";
+import { filteredOrderListState } from "../../selectors/filteredOrderListState";
+import { ORDERLIST_FILTER_ENUM } from "../../var/ORDERLIST_FILTER_ENUM";
 
 interface OrdersProps {
   orders: Order[];
