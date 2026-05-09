@@ -11,7 +11,7 @@ const ViewOrder: NextPage = () => {
   const [loadError, setLoadError] = useState<string>("");
   const [editOrder, setEditOrder] = useRecoilState(editOrderState);
   const router = useRouter();
-
+  // Завантажуємо замовлення при завантаженні сторінки або зміні id в URL
   useEffect(() => {
     if (!router.isReady) return;
     const id = router.query.id as string | undefined;
