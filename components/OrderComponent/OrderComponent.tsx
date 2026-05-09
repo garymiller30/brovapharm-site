@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  GridItem,
-  Text,
-  useToast,
-  UseToastOptions,
-} from "@chakra-ui/react";
+import { Container, Grid, GridItem } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -140,36 +131,43 @@ const OrderComponent: NextPage = () => {
       errors++;
     }
     if (!errors) {
-      await createOrder();
-      router.push("/orders");
+      const isSaved = await createOrder();
+      if (isSaved) {
+        router.push("/orders");
+      }
     }
   };
 
-  async function createOrder() {
+  async function createOrder(): Promise<boolean> {
     if (editOrder.isNew) {
       try {
         const order: Order = new Order(orderNum, psArr);
         await clientAddOrder(order);
 
         showSuccessToast("Замовлення створено!");
+        return true;
       } catch (error: unknown) {
         showErrToast((error as Error).message);
+        return false;
       }
-    } else {
-      if (editOrder.order) {
-        const order: Order = {
-          ...editOrder.order,
-          Number: orderNum,
-          sheets: [...psArr],
-        };
-        try {
-          await clientUpdateOrder(order);
-          showSuccessToast("Замовлення збережено!");
-        } catch (error: unknown) {
-          showErrToast((error as Error).message);
-        }
+    } else if (editOrder.order) {
+      const order: Order = {
+        ...editOrder.order,
+        Number: orderNum,
+        sheets: [...psArr],
+      };
+      try {
+        await clientUpdateOrder(order);
+        showSuccessToast("Замовлення збережено!");
+        return true;
+      } catch (error: unknown) {
+        showErrToast((error as Error).message);
+        return false;
       }
     }
+
+    showErrToast("Немає замовлення для збереження");
+    return false;
   }
 
   return (

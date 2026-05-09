@@ -1,45 +1,66 @@
-import { Box, Button, Center, Text } from "@chakra-ui/react";
+import { Box, Center, Text, Spinner } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { NextRouter, useRouter, withRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editOrderState } from "../../atoms/editOrderState";
 import OrderComponent from "../../components/OrderComponent/OrderComponent";
-import { Spinner } from "@chakra-ui/react";
 
 const ViewOrder: NextPage = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<string>("");
   const [editOrder, setEditOrder] = useRecoilState(editOrderState);
   const router = useRouter();
 
   useEffect(() => {
-    setLoading(true);
-  }, []);
-
-  useEffect(() => {
     if (!router.isReady) return;
+    const id = router.query.id as string | undefined;
 
     async function getOrder() {
-      const id = router.query.id as string;
+      if (!id) {
+        setLoadError("Не вказано id замовлення");
+        setLoading(false);
+        return;
+      }
 
-      if (id) {
+      try {
         const res = await fetch(`/api/order?id=${id}`);
+        if (!res.ok) {
+          setLoadError("Не вдалося завантажити замовлення");
+          setLoading(false);
+          return;
+        }
         const order = await res.json();
 
-        setEditOrder({ order, isReadOnly: true });
+        setEditOrder({ order, isNew: false, isReadOnly: true });
+      } catch {
+        setLoadError("Не вдалося завантажити замовлення");
       }
+      setLoading(false);
     }
 
-    if (!editOrder.order) {
-      getOrder();
-    }
-  }, [editOrder, router.isReady]);
+    setLoadError("");
+    setLoading(true);
+    getOrder();
+  }, [router.isReady, router.query.id, setEditOrder]);
 
-  if (!loading || !router.isReady || !editOrder.order)
+  const id = router.query.id as string | undefined;
+  const isCurrentOrder = editOrder.order?.id?.toString() === id;
+
+  if (loadError)
     return (
       <Box w="100vw" h="100vh">
         <Center h="100%">
-          <Spinner size="xl" /> <Text m={5}>Завантажую...</Text>
+          <Text m={5}>{loadError}</Text>
+        </Center>
+      </Box>
+    );
+
+  if (loading || !router.isReady || !editOrder.order || !isCurrentOrder)
+    return (
+      <Box w="100vw" h="100vh">
+        <Center h="100%">
+          <Spinner size="md" /> <Text m={5}>Завантажую...</Text>
         </Center>
       </Box>
     );
